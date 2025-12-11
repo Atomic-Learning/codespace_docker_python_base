@@ -1,6 +1,6 @@
 {
-  "name": "Codespaces (GHCR Python base)",
-  "image": "ghcr.io/Atomic_Learning/codespace_docker_python_base:latest",
+  "name": "Atomic_Learning Python Codespace",
+  "image": "ghcr.io/atomic_learning/codespace_docker_python_base:latest",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "remoteUser": "vscode",
   "customizations": {
@@ -17,7 +17,9 @@
     }
   },
   "settings": {
+    "python.defaultInterpreterPath": "/usr/local/bin/python",
     "python.formatting.provider": "black"
   },
-  "postCreateCommand": "python -c \"import numpy, scipy, matplotlib, pandas; print('packages OK')\" || true"
+  "postCreateCommand": "python -c \"import numpy, scipy, matplotlib, pandas; print('packages OK')\" || true",
+  "forwardPorts": [8888]
 }
