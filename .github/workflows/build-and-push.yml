@@ -37,7 +37,7 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ toLower(github.repository_owner) }}/codespace_docker_python_base:latest
-            ghcr.io/${{ toLower(github.repository_owner) }}/codespace_docker_python_base:${{ github.sha }}
+            ghcr.io/atomic-learning/codespace_docker_python_base:latest
+            ghcr.io/atomic-learning/codespace_docker_python_base:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
