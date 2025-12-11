@@ -6,5 +6,3 @@ Contains Python 3.12 with the following packages:
 - Scipy
 - Matplotlib
 - Pandas
-
-VS Code Extensions:
