@@ -41,37 +41,3 @@ jobs:
             ghcr.io/atomic-learning/codespace_docker_python_base:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
-      - name: Ensure package visibility is public
-        # This step attempts to set the container package visibility to public.
-        # It will try GHCR_PAT (if present) and fall back to GITHUB_TOKEN.
-        # Note: org policy may prevent the token from changing visibility; if so,
-        # use a PAT from an account with permission and add it as the GHCR_PAT secret.
-        env:
-          OWNER: ${{ github.repository_owner }}
-          PACKAGE: codespace_docker_python_base
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GHCR_PAT: ${{ secrets.GHCR_PAT }}
-        run: |
-          set -euo pipefail
-          TOKEN="${GHCR_PAT:-$GITHUB_TOKEN}"
-          if [ -z "$TOKEN" ]; then
-            echo "No token available to change package visibility. Skipping."
-            exit 0
-          fi
-          API_URL="https://api.github.com/orgs/${OWNER}/packages/container/${PACKAGE}/visibility"
-          echo "Setting package visibility to public for ${OWNER}/${PACKAGE} via ${API_URL}"
-          resp=$(curl -sS -w "%{http_code}" -o /tmp/visibility_resp.json -X PUT \
-            -H "Authorization: Bearer $TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            -d '{"visibility":"public"}' \
-            "$API_URL" || true)
-          http_code="${resp:(-3)}"
-          echo "HTTP code: $http_code"
-          cat /tmp/visibility_resp.json || true
-          if [ "$http_code" != "200" ] && [ "$http_code" != "201" ] && [ "$http_code" != "204" ]; then
-            echo "Warning: failed to set package visibility. Response code: $http_code"
-            echo "If this is due to permissions, add a PAT with package write permissions as the GHCR_PAT secret, or set visibility manually in the Packages UI."
-            exit 1
-          fi
-          echo "Package visibility set (or already public)."
