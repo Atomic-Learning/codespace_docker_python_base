@@ -1,6 +1,6 @@
 {
-  "name": "Atomic_Learning Python Codespace",
-  "image": "ghcr.io/atomic_learning/codespace_docker_python_base:latest",
+  "name": "Atomic-Learning Python Codespace",
+  "image": "ghcr.io/atomic-learning/codespace_docker_python_base:latest",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "remoteUser": "vscode",
   "customizations": {
