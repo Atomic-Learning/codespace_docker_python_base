@@ -25,6 +25,9 @@ ARG USER=vscode
 ARG UID=1000
 RUN useradd -m -u ${UID} ${USER} || true
 
+# Create /workspaces directory as root before switching users
+RUN mkdir -p /workspaces && chown ${USER}:${USER} /workspaces
+
 # Switch to that user
 USER ${USER}
 WORKDIR /home/${USER}/workspace
@@ -33,9 +36,6 @@ WORKDIR /home/${USER}/workspace
 # Using --prefer-binary and --no-cache-dir helps keep the image smaller and pulls wheels when available.
 RUN python -m pip install --upgrade pip setuptools wheel \
  && pip --no-cache-dir install --prefer-binary numpy scipy matplotlib pandas
-
-# Optional: create a lightweight scripts directory and default workspace folder
-RUN mkdir -p /workspaces && ln -s /workspaces /home/${USER}/workspace || true
 
 # Final image metadata
 ENV PATH="/home/${USER}/.local/bin:${PATH}"
