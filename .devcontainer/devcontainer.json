@@ -1,0 +1,23 @@
+{
+  "name": "Codespaces (GHCR Python base)",
+  "image": "ghcr.io/Atomic_Learning/codespace_docker_python_base:latest",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "remoteUser": "vscode",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-toolsai.jupyter",
+        "ms-python.black-formatter",
+        "ms-python.isort",
+        "ms-python.flake8",
+        "eamodio.gitlens"
+      ]
+    }
+  },
+  "settings": {
+    "python.formatting.provider": "black"
+  },
+  "postCreateCommand": "python -c \"import numpy, scipy, matplotlib, pandas; print('packages OK')\" || true"
+}
